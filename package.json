@@ -1,0 +1,50 @@
+{
+  "name": "starlight-interactive-islands",
+  "version": "0.1.0",
+  "description": "Starlight plugin for embedding interactive framework components in MDX as Astro islands with configurable hydration strategies",
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "starlight",
+    "astro",
+    "islands",
+    "interactive",
+    "mdx",
+    "react",
+    "solid-js",
+    "svelte",
+    "vue"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "zod": "^3.23.0",
+    "fast-glob": "^3.3.0"
+  },
+  "peerDependencies": {
+    "@astrojs/starlight": ">=0.28.0",
+    "astro": ">=4.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@astrojs/starlight": {
+      "optional": false
+    },
+    "astro": {
+      "optional": false
+    }
+  },
+  "devDependencies": {
+    "vitest": "^2.0.0",
+    "typescript": "^5.6.0",
+    "@astrojs/starlight": "^0.28.0",
+    "astro": "^4.0.0"
+  }
+}
