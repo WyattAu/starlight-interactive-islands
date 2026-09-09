@@ -1,7 +1,17 @@
 {
-  "name": "starlight-interactive-islands",
+  "name": "@wyatt/starlight-interactive-islands",
   "version": "0.1.0",
   "description": "Starlight plugin for embedding interactive framework components in MDX as Astro islands with configurable hydration strategies",
+  "author": "WyattAu",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WyattAu/starlight-interactive-islands.git"
+  },
+  "bugs": {
+    "url": "https://github.com/WyattAu/starlight-interactive-islands/issues"
+  },
+  "homepage": "https://github.com/WyattAu/starlight-interactive-islands#readme",
   "type": "module",
   "main": "./src/index.ts",
   "types": "./src/index.ts",
