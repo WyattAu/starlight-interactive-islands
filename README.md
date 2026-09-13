@@ -8,9 +8,12 @@ Astro islands normally require an `.astro` wrapper page per component. This plug
 
 - **Use components directly in MDX** — register once, reference by name
 - **Hydration strategies**: `load`, `visible`, `idle`, `media`, and `only` (client-only)
-- **Framework-agnostic**: React, Preact, Solid JS, Svelte, Vue
-- **Auto-import injection** into every page (optional)
+- **Framework-agnostic**: React, Preact, Solid JS, Svelte, and Vue
+- **Automatic import + hydration directive injection** into MDX (optional — `autoImport: false` to manage imports yourself)
 - **Registry validation** catches bad paths/frameworks at startup, not at runtime
+
+The site must also install the matching framework integration for each registered
+component (for example `@astrojs/react` + `react` + `react-dom`).
 
 ## Installation
 

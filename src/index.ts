@@ -1,30 +1,38 @@
 import type { InteractiveIslandsOptions } from './types.js';
 import { ComponentRegistry, ComponentRegistryError } from './registry.js';
 import { generateMDXImports, generateMDXComponents, generateAstroIntegrationConfig } from './auto-import.js';
+import { createIslandsRemarkPlugin } from './remark-islands.js';
 
 export type { IslandComponent, InteractiveIslandsOptions, HydrationStrategy, Framework, ValidationResult } from './types.js';
 export { ComponentRegistry, ComponentRegistryError } from './registry.js';
 export { generateMDXImports, generateMDXComponents, generateAstroIntegrationConfig } from './auto-import.js';
+export { createIslandsRemarkPlugin } from './remark-islands.js';
 
 const PLUGIN_NAME = 'starlight-interactive-islands';
-
-interface StarlightHookContext {
-  config: Record<string, unknown>;
-  command: string;
-  isRestart: boolean;
-}
 
 interface AstroIntegration {
   name: string;
   hooks: {
     'astro:config:setup'?: (options: {
-      config: Record<string, unknown>;
+      config: {
+        markdown?: {
+          remarkPlugins?: unknown[];
+        };
+      };
       command: string;
+      updateConfig: (config: Record<string, unknown>) => void;
       injectScript: (stage: string, content: string) => void;
       addWatchFile: (path: string) => void;
     }) => void;
     'astro:config:done'?: (options: { config: Record<string, unknown> }) => void;
   };
+}
+
+interface StarlightHookContext {
+  config: Record<string, unknown>;
+  command: string;
+  isRestart: boolean;
+  addIntegration: (integration: AstroIntegration) => void;
 }
 
 export function starlightInteractiveIslands(options: InteractiveIslandsOptions) {
@@ -43,17 +51,18 @@ export function starlightInteractiveIslands(options: InteractiveIslandsOptions) 
   }
 
   const autoImport = options.autoImport ?? true;
-  const integrationConfig = generateAstroIntegrationConfig(registry);
 
   const integration: AstroIntegration = {
     name: PLUGIN_NAME,
     hooks: {
-      'astro:config:setup'({ injectScript }) {
-        if (autoImport) {
-          for (const imp of integrationConfig.imports) {
-            injectScript('page', imp);
-          }
-        }
+      'astro:config:setup'({ config, updateConfig }) {
+        if (!autoImport) return;
+        const existing = config.markdown?.remarkPlugins ?? [];
+        updateConfig({
+          markdown: {
+            remarkPlugins: [...existing, createIslandsRemarkPlugin(registry.getAll())],
+          },
+        });
       },
     },
   };
@@ -62,8 +71,13 @@ export function starlightInteractiveIslands(options: InteractiveIslandsOptions) 
     name: PLUGIN_NAME,
     integration,
     registry,
+    hooks: {
+      'config:setup'({ addIntegration }: StarlightHookContext) {
+        addIntegration(integration);
+      },
+    },
     getConfig() {
-      return integrationConfig;
+      return generateAstroIntegrationConfig(registry);
     },
   };
 }
