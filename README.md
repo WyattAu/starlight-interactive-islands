@@ -6,10 +6,10 @@ Astro islands normally require an `.astro` wrapper page per component. This plug
 
 ## Features
 
-- **Use components directly in MDX** — register once, reference by name
+- **Use components directly in MDX**; register once, reference by name
 - **Hydration strategies**: `load`, `visible`, `idle`, `media`, and `only` (client-only)
 - **Framework-agnostic**: React, Preact, Solid JS, Svelte, and Vue
-- **Automatic import + hydration directive injection** into MDX (optional — `autoImport: false` to manage imports yourself)
+- **Automatic import + hydration directive injection** into MDX (optional; `autoImport: false` to manage imports yourself)
 - **Registry validation** catches bad paths/frameworks at startup, not at runtime
 
 The site must also install the matching framework integration for each registered
@@ -58,11 +58,11 @@ Then in any MDX page:
 
 | Option | Type | Default | Description |
 |---|---|---|---|
-| `components` | `Record<string, IslandComponent>` | — (required) | Map of component name to definition; must contain at least one entry |
+| `components` | `Record<string, IslandComponent>` |; (required) | Map of component name to definition; must contain at least one entry |
 | `autoImport` | `boolean` | `true` | Inject imports into every page |
-| `defaultHydration` | `HydrationStrategy` | — | Default hydration strategy |
-| `defaultFramework` | `Framework` | — | Default framework |
-| `wrapper` | `{ tag?, class? }` | — | Default wrapper element around islands |
+| `defaultHydration` | `HydrationStrategy` |; | Default hydration strategy |
+| `defaultFramework` | `Framework` |; | Default framework |
+| `wrapper` | `{ tag?, class? }` |; | Default wrapper element around islands |
 
 Each component entry supports:
 
